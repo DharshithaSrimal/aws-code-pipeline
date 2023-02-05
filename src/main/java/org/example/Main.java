@@ -13,9 +13,7 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 public class Main {
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Map<String, String> data) {
         Gson gson = new Gson();
-
         RequestInput res = gson.fromJson(input.getBody(), RequestInput.class);
-
         String output = String.format("{ \"response\": %s }", data.toString());
 
         Map<String, String> responseHeaders = new HashMap<>();
