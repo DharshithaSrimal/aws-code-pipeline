@@ -21,7 +21,6 @@ public class Main {
         Map<String, String> responseHeaders = new HashMap<>();
         responseHeaders.put("Content-Type", "application/json");
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent().withHeaders(responseHeaders);
-stem.out.println("Done");
         return response
                 .withStatusCode(200)
                 .withBody(output);
