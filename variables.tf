@@ -1,6 +1,6 @@
 variable "repo_name" {
   type    = string
-  default = "video-repo"
+  default = "website-repo"
 }
 
 variable "codebuild_project_name" {

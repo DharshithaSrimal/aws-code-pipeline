@@ -1,4 +1,4 @@
-resource "aws_iam_role" "website_iam" {
+resource "aws_iam_role" "example" {
   name               = "${var.codebuild_project_name}-service-role"
   assume_role_policy = data.aws_iam_policy_document.aws_iam_policy_document.json
 }
@@ -14,7 +14,7 @@ data "aws_iam_policy_document" "aws_iam_policy_document" {
 }
 
 resource "aws_iam_role_policy_attachment" "attach" {
-  role       = aws_iam_role.website_iam.name
+  role       = aws_iam_role.example.name
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 }
 

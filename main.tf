@@ -1,17 +1,17 @@
 data "aws_codecommit_repository" "repo" {
   repository_name = var.repo_name
 }
-resource "aws_codebuild_project" "website-codebuild" {
+resource "aws_codebuild_project" "example" {
   name         = var.codebuild_project_name
-  service_role = aws_iam_role.website_iam.arn
+  service_role = aws_iam_role.example.arn
   environment {
     compute_type = "BUILD_GENERAL1_SMALL"
     image        = "aws/codebuild/amazonlinux2-x86_64-standard:4.0"
     type         = "LINUX_CONTAINER"
   }
   source {
-    type            = "GITHUB"
-    location        = https://github.com/DharshithaSrimal/aws-code-pipeline
+    type            = "CODECOMMIT"
+    location        = data.aws_codecommit_repository.repo.clone_url_http
     git_clone_depth = 1
     buildspec       = <<-EOF
       version: 0.2
@@ -34,13 +34,13 @@ resource "aws_codebuild_project" "website-codebuild" {
   source_version = "main"
 }
 
-resource "aws_codepipeline" "website-pipeline" {
+resource "aws_codepipeline" "example" {
   name = "terraform-pipeline"
 
   role_arn = aws_iam_role.codepipeline_role.arn
 
   artifact_store {
-    location = aws_s3_bucket.website_bucket.id
+    location = aws_s3_bucket.example_bucket.id
     type     = "S3"
   }
 
@@ -50,13 +50,11 @@ resource "aws_codepipeline" "website-pipeline" {
     action {
       name     = "SourceAction"
       category = "Source"
-      owner    = "ThirdParty"
-      provider = "GitHub"
+      owner    = "AWS"
+      provider = "CodeCommit"
       version  = "1"
       configuration = {
-        Owner          = "DharshithaSrimal"
-        Repo           = "aws-code-pipeline"
-        OAuthToken     = var.github_oauth_token
+        RepositoryName = var.repo_name
         BranchName     = "main"
       }
 
@@ -75,7 +73,7 @@ resource "aws_codepipeline" "website-pipeline" {
       version         = "1"
       input_artifacts = ["source_artifact"]
       configuration = {
-        ProjectName = aws_codebuild_project.website-codebuild.name
+        ProjectName = aws_codebuild_project.example.name
       }
     }
   }

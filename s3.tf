@@ -1,4 +1,4 @@
-resource "aws_s3_bucket" "website_bucket" {
-  bucket = "pipeline-artifact-terraform-pipeline"
+resource "aws_s3_bucket" "example_bucket" {
+  bucket = "website-pipeline-repo-terraform"
   acl    = "private" # Access Control List (ACL) for the bucket
 }
