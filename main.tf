@@ -75,6 +75,7 @@ resource "aws_codepipeline" "example" {
       configuration = {
         ProjectName = aws_codebuild_project.example.name
       }
+      run_order = 1
     }
   }
 }
