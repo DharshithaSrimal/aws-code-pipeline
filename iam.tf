@@ -1,5 +1,5 @@
 resource "aws_iam_role" "example" {
-  name               = "${var.codebuild_project_name}-service-role"
+  name               = "${var.website_project_name}-service-role"
   assume_role_policy = data.aws_iam_policy_document.aws_iam_policy_document.json
 }
 
