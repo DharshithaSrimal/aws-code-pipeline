@@ -3,12 +3,12 @@ data "aws_codecommit_repository" "repo" {
 }
 
 resource "aws_codepipeline" "example" {
-  name = "terraform-pipeline"
+  name = "terraform-pipeline-test"
 
   role_arn = aws_iam_role.codepipeline_role.arn
 
   artifact_store {
-    location = aws_s3_bucket.website_bucket.id
+    location = aws_s3_bucket.website_bucket-test.id
     type     = "S3"
   }
 
@@ -41,7 +41,7 @@ resource "aws_codepipeline" "example" {
       version         = "1"
       input_artifacts = ["source_artifact"]
       configuration = {
-        BucketName      = aws_s3_bucket.website_bucket.bucket
+        BucketName      = aws_s3_bucket.website_bucket-test.bucket
         Extract         = "false"
         ObjectKey       = "index.html"  # Update this to the path of your main HTML file
         CacheControl    = "max-age=0, must-revalidate"

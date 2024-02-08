@@ -3,7 +3,7 @@ variable "repo_name" {
   default = "website-repo"
 }
 
-variable "website_project_name" {
+variable "website_project" {
   type    = string
   default = "demo-website"
 }
